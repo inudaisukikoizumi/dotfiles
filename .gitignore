@@ -1,0 +1,5 @@
+# vim backup
+./.vimbackup/backup/*
+
+# vim swap
+./.vimbackup/swap/*

@@ -3,8 +3,9 @@ scriptencoding utf-8
 if has('vim_starting')
   filetype plugin off
   filetype indent off
+
   execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
-call neobundle#rc(expand('~/.vim/bundle'))
+  call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
@@ -21,7 +22,9 @@ NeoBundle 'git://github.com/scrooloose/syntastic.git'
 NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
 NeoBundle 'git://github.com/rking/ag.vim.git'
 NeoBundle 'git://github.com/itchyny/lightline.vim.git'
+
 NeoBundle 'git://github.com/tpope/vim-fugitive.git'
+NeoBundle 'git://github.com/gregsexton/gitv.git'
 
 NeoBundle 'git://github.com/alpaca-tc/alpaca_powertabline.git'
 

@@ -134,12 +134,10 @@ set encoding=utf-8
 set fileencoding=utf-8
 " highlight matches with last search pattern
 set hlsearch
-" statusline Setting.
-"set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 " show statusline Setting.
 set laststatus=2
 " yunk copy clipboad Setting.
-set clipboard=unnamed,autoselect
+"set clipboard=unnamed,autoselect
 " insert mode Setting.
 set backspace=indent,eol,start
 

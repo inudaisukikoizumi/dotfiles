@@ -1,3 +1,5 @@
+" vi compatible off Setting.
+set nocompatible
 scriptencoding utf-8
 
 if has('vim_starting')
@@ -9,12 +11,15 @@ if has('vim_starting')
 endif
 
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'Shougo/vimproc', {
+NeoBundle 'git://github.com/Shougo/vimproc.git', {
       \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
       \     'mac' : 'make -f make_mac.mak',
       \     'unix' : 'make -f make_unix.mak',
       \    },
       \ }
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
 
 NeoBundle 'git://github.com/kien/ctrlp.vim.git'
 NeoBundle 'git://github.com/scrooloose/nerdtree.git'
@@ -28,7 +33,9 @@ NeoBundle 'git://github.com/gregsexton/gitv.git'
 
 NeoBundle 'git://github.com/alpaca-tc/alpaca_powertabline.git'
 
-" {{{ RoR Plugin Setting.
+NeoBundle 'git://github.com/AndrewRadev/switch.vim.git'
+
+NeoBundleLazy 'Shougo/neocomplete', { 'autoload' : { 'insert' : 1 } }
 NeoBundleLazy 'Shougo/neosnippet', {
       \ 'autoload' : {
       \   'commands' : ['NeoSnippetEdit', 'NeoSnippetSource'],
@@ -79,12 +86,14 @@ NeoBundleLazy 'alpaca-tc/neorspec.vim', {
       \ }}
 
 NeoBundleLazy 'alpaca-tc/alpaca_tags', {
-      \ 'depends': 'Shougo/vimproc',
+      \ 'rev' : 'development',
+      \ 'depends': ['Shougo/vimproc', 'Shougo/unite.vim'],
       \ 'autoload' : {
-      \   'commands': ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsBundle']
+      \   'commands' : ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle', 'TagsCleanCache'],
+      \   'unite_sources' : ['tags']
       \ }}
-" }}}
 
+filetype on
 filetype plugin on
 filetype indent on
 
@@ -119,8 +128,6 @@ syntax on
 set wildmenu
 " current line highlight Setting.
 set cursorline
-" vi compatible off Setting.
-set nocompatible
 " vim encoding Setting.
 set encoding=utf-8
 " file encording Setting.
@@ -130,7 +137,7 @@ set hlsearch
 " show statusline Setting.
 set laststatus=2
 " yunk copy clipboad Setting.
-"set clipboard=unnamed,autoselect
+set clipboard=unnamed,autoselect
 " insert mode Setting.
 set backspace=indent,eol,start
 
@@ -152,10 +159,8 @@ let g:indent_guides_color_change_percent = 50
 let g:indent_guides_guide_size = 1
 " 自動カラーを無効にする
 let g:indent_guides_auto_colors=0
-" 奇数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=4
-" 偶数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgrey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=blue ctermbg=4
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgray ctermbg=darkgray
 "" }}}
 
 "" syntastic {{{
@@ -164,7 +169,7 @@ let g:syntastic_auto_loc_list=2
 let g:syntastic_enable_highlighting=1
 let g:syntastic_check_on_open=1
 let g:syntastic_quiet_warnings=0
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby', 'php'] }
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby', 'php', 'javascript', 'sh'] }
 let g:syntastic_ruby_checkers = ['rubocop']
 set statusline=%t       "tail of the filename
 set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
@@ -179,7 +184,7 @@ set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P    "percent through file
 
 compiler ruby
-let ruby_space_errors=1
+let ruby_space_errors=0
 "" }}}
 
 " {{{ neosnippet 
@@ -243,6 +248,30 @@ endfunction
 function! MyMode()
   return winwidth('.') > 60 ? lightline#mode() : ''
 endfunction
+"" }}}
+
+"" {{{
+let s:hooks = neobundle#get_hooks("neocomplete.vim")
+function! s:hooks.on_source(bundle)
+  let g:acp_enableAtStartup = 1
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+endfunction
+"" }}}
+
+nnoremap - :Switch<cr>
+
+"" {{{ Unite.vim Settings.
+let g:unite_enable_start_insert=1
+let g:unite_source_history_yank_enable =1
+let g:unite_source_file_mru_limit = 200
+nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> ,uu :<C-u>Unite file_mru buffer<CR>
 "" }}}
 
 colorscheme jellybeans

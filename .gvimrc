@@ -1,5 +1,6 @@
 if has('gui_macvim')
   colorscheme jellybeans
+  set formatoptions=q
   set nobackup
   set visualbell
   set noswapfile

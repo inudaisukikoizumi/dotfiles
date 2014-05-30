@@ -20,6 +20,7 @@ NeoBundle 'git://github.com/Shougo/vimproc.git', {
       \    },
       \ }
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/vim-scripts/sudo.vim.git'
 
 NeoBundle 'git://github.com/kien/ctrlp.vim.git'
 NeoBundle 'git://github.com/scrooloose/nerdtree.git'
@@ -140,6 +141,8 @@ set laststatus=2
 set clipboard=unnamed,autoselect
 " insert mode Setting.
 set backspace=indent,eol,start
+" uncreate undofile.
+set noundofile
 
 " TabLineのキーバインド設定
 nnoremap <S-Tab> gt

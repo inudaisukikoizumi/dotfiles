@@ -70,16 +70,6 @@ NeoBundleLazy 'basyura/unite-rails', {
       \   ]
       \ }}
 
-NeoBundleLazy 'alpaca-tc/unite-rails_best_practices', {
-      \ 'depends' : 'Shougo/unite.vim',
-      \ 'build' : {
-      \    'mac': 'gem install rails_best_practices',
-      \    'unix': 'gem install rails_best_practices',
-      \ },
-      \ 'autoload': {
-      \   'unite_sources': 'rails_best_practices'
-      \ }}
-
 NeoBundleLazy 'alpaca-tc/neorspec.vim', {
       \ 'depends' : ['alpaca-tc/vim-rails', 'tpope/vim-dispatch'],
       \ 'autoload' : {
@@ -171,7 +161,6 @@ let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=2
 let g:syntastic_enable_highlighting=1
 let g:syntastic_check_on_open=1
-let g:syntastic_quiet_warnings=0
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby', 'php', 'javascript', 'sh'] }
 let g:syntastic_ruby_checkers = ['rubocop']
 set statusline=%t       "tail of the filename
